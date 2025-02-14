@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encode</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* General Page Styling */
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* Buttons Styling */
+        .btn-custom {
+            background: #ff9800;
+            color: white;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-custom:hover {
+            background: #e65100;
+            transform: scale(1.05);
+        }
+
+        .selection-btn {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+
+        .selection-btn:hover {
+            background: white;
+            color: black;
+            transform: scale(1.1);
+        }
+
+        .selected {
+            background-color: #4caf50 !important;
+            color: white !important;
+            transform: scale(1.1);
+        }
+
+        /* Theme Colors for Selection */
+        .image-selected {
+            border: 2px solid #03a9f4;
+        }
+
+        .audio-selected {
+            border: 2px solid #9c27b0;
+        }
+
+        .video-selected {
+            border: 2px solid #f44336;
+        }
+
+        /* Floating Icon */
+        .floating-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Form Input Fields */
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: none;
+        }
+
+        /* Back Button */
+        .btn-outline-secondary {
+            color: white;
+            border-color: white;
+        }
+
+        .btn-outline-secondary:hover {
+            background: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1 class="text-center mb-2">Encode</h1>
+        <div class="text-center mb-4">
+            <span style="font-size: 2rem;">🔒</span>
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-outline-light selection-btn" onclick="selectType('image')" id="btn-image">Image</button>
+            <button type="button" class="btn btn-outline-light selection-btn" onclick="selectType('audio')" id="btn-audio">Audio</button>
+            <button type="button" class="btn btn-outline-light selection-btn" onclick="selectType('video')" id="btn-video">Video</button>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Select file:</label>
+                <input type="file" name="file" id="file" class="form-control" required accept="" onchange="validateFile()">
+                <div id="file-message" class="mt-2 text-success"></div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message to hide:</label>
+                <textarea name="message" id="message" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom w-100">Encode</button>
+            <button type="button" class="btn btn-danger w-100 mt-2" onclick="clearForm()">Clear</button>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info mt-3">
+                    <ul class="mb-0">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="text-center mt-3">
+            <a href="{{ url_for('main') }}" class="btn btn-outline-secondary">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedType = "";
+
+        function selectType(type) {
+            selectedType = type;
+            document.getElementById("btn-image").classList.remove("selected");
+            document.getElementById("btn-audio").classList.remove("selected");
+            document.getElementById("btn-video").classList.remove("selected");
+            document.getElementById("main-container").classList.remove("image-selected", "audio-selected", "video-selected");
+
+            document.getElementById(`btn-${type}`).classList.add("selected");
+            document.getElementById("main-container").classList.add(`${type}-selected`);
+
+            let fileInput = document.getElementById("file");
+            if (type === "image") {
+                fileInput.setAttribute("accept", "image/*");
+                showFloatingIcon("📷");
+            } else if (type === "audio") {
+                fileInput.setAttribute("accept", "audio/*");
+                showFloatingIcon("🎵");
+            } else if (type === "video") {
+                fileInput.setAttribute("accept", "audio/*,video/*");
+                showFloatingIcon("🎬");
+            }
+        }
+
+        function showFloatingIcon(icon) {
+            let container = document.getElementById("main-container");
+
+            let existingIcon = document.getElementById("floating-icon");
+            if (existingIcon) {
+                existingIcon.remove();
+            }
+
+            let floatingIcon = document.createElement("div");
+            floatingIcon.classList.add("floating-icon");
+            floatingIcon.innerHTML = icon;
+            floatingIcon.style.right = "20px";
+            floatingIcon.style.top = "20px";
+            floatingIcon.id = "floating-icon";
+
+            container.appendChild(floatingIcon);
+        }
+
+        function validateFile() {
+    let fileInput = document.getElementById("file");
+    let fileMessage = document.getElementById("file-message");
+
+    if (selectedType === "") {
+        fileMessage.textContent = "Please select an option (Image, Audio, or Video) first.";
+        fileMessage.classList.remove("text-success");
+        fileMessage.classList.add("text-danger");
+        fileInput.value = ""; // Clear file input
+        return;
+    }
+
+    if (fileInput.files.length > 0) {
+        fileMessage.textContent = `${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} selected successfully.`;
+        fileMessage.classList.remove("text-danger");
+        fileMessage.classList.add("text-success");
+    } else {
+        fileMessage.textContent = "";
+    }
+}
+
+    </script>
+</body>
+</html>

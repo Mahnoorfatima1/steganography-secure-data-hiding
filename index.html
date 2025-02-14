@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Tool</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* Professional Brighter Theme */
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #007bff;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+            transition: 0.3s;
+        }
+        .navbar-brand:hover {
+            color: gold;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin: 0 10px;
+        }
+        .nav-link {
+            color: #ffffff;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: gold;
+        }
+
+        /* Main Content Styling */
+        .container {
+            flex: 1;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            font-size: 18px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            color: white;
+            background-color: #007bff;
+            border: 1px solid #343a40;
+            transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+        }
+        .btn-custom:hover {
+            background-color: #343a40;
+            color: #ffffff;
+            border-color: #343a40;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container" style="max-width: 900px;">
+            <a class="navbar-brand" href="#"><i class="fas fa-user-secret"></i> Steganography</a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('welcome') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('welcome') }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('welcome') }}#contact">Contact</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('welcome') }}#features">Features</a>
+                    </li>
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><i class="fas fa-user-secret"></i> Steganography Tool</h1>
+        <p class="fs-5">Hide messages with advanced security!</p>
+        
+        <!-- Buttons -->
+        <div class="d-flex flex-column align-items-center">
+            <a href="{{ url_for('encode') }}" class="btn btn-custom">
+                <i class="fas fa-lock"></i> Encode
+            </a>
+            <a href="{{ url_for('decode') }}" class="btn btn-custom">
+                <i class="fas fa-unlock"></i> Decode
+            </a>
+            <a href="{{ url_for('welcome') }}" class="btn btn-custom">
+                <i class="fas fa-home"></i> Welcome
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 Steganography Tool. All Rights Reserved.
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

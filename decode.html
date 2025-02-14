@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decode - Hacking Style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Colorful Dark Theme */
+        body {
+            background-color: #243b55;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            transition: background-color 1s ease; /* Smooth background color transition */
+        }
+    
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #444;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid transparent;
+            animation: fadeIn 1s ease-in-out;
+        }
+    
+        h1 {
+    text-align: center;
+    font-weight: 900; /* Maximum boldness */
+    text-shadow: 0 0 8px #444;
+    margin-bottom: 20px;
+    font-size: 2rem; /* Slightly larger */
+    color: #ff4081; /* Pink color for the title */
+}
+
+    
+        .option-btn {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 2px solid #444;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 90px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+    
+        .option-btn:hover {
+            background-color: #f44336;
+            color: white;
+            border-color: #666;
+        }
+    
+        .option-btn.active {
+            background-color: #4caf50;
+            color: white;
+            border-color: #666;
+        }
+    
+        .form-control {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+    
+        .form-control:focus {
+            background-color: #333;
+            color: white;
+            border-color: #666;
+            box-shadow: 0 0 5px #666;
+        }
+    
+        .btn-primary {
+            background-color: #2196f3; /* Blue color */
+            border: none;
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            padding: 10px;
+        }
+    
+        .btn-primary:hover {
+            background-color: #0d47a1;
+        }
+    
+        .btn-secondary {
+            background-color: #4caf50; /* Green color */
+            border: none;
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            padding: 10px;
+            margin-top: 15px;
+        }
+    
+        .btn-secondary:hover {
+            background-color: #388e3c;
+        }
+    
+        .btn-danger {
+            background-color: #f44336; /* Red color for clear button */
+            border: none;
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+    
+        .option-btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+    
+        .floating-icon {
+            position: absolute;
+            font-size: 1.2rem;
+            top: -8px;
+            right: -8px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease-in-out;
+        }
+    
+        .option-btn.active .floating-icon {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+    
+        .file-message {
+            margin-top: 15px;
+            color: #4caf50;
+            font-size: 0.9rem;
+        }
+    
+        /* Background colors for file types (no animation) */
+        .background-image {
+            background-color: #2c3e50; /* Dark blue-grey background for images */
+        }
+    
+        .background-audio {
+            background-color: #34495e; /* Dark grey-blue background for audio */
+        }
+    
+        .background-video {
+            background-color: #16a085; /* Dark teal background for videos */
+        }
+    
+        /* Image slide-in animation removed */
+    
+        /* Audio slide-in animation removed */
+    
+        /* Video slide-in animation removed */
+    
+        /* Add strong animation for container */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    
+        /* New styles for decoded message */
+        .decoded-message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    
+        .success-message {
+            background-color: #4caf50;
+            color: white;
+        }
+    
+        .error-message {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mb-2">Decode</h1>
+<div class="text-center mb-4">
+    <span style="font-size: 2rem;">🔓</span>
+</div>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Select File Type:</label>
+                <div class="option-btn-container">
+                    <button type="button" class="option-btn" onclick="setFileType('image')" id="imageBtn">
+                        <span class="floating-icon">📷</span> Image
+                    </button>
+                    <button type="button" class="option-btn" onclick="setFileType('audio')" id="audioBtn">
+                        <span class="floating-icon">🎵</span> Audio
+                    </button>
+                    <button type="button" class="option-btn" onclick="setFileType('video')" id="videoBtn">
+                        <span class="floating-icon">🎬</span> Video
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="file" class="form-label">Select file:</label>
+                <input type="file" name="file" id="file" class="form-control" required onchange="showFileName()">
+                <small id="fileMessage" class="file-message"></small>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Decode</button>
+            <button type="button" class="btn btn-danger" onclick="clearForm()">Clear</button>
+        </form>
+
+        <div id="decodedMessage" class="decoded-message"></div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="mt-3">
+                    {% for message in messages %}
+                        <li class="text-danger">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('main') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    <script>
+       function setFileType(type) {
+    let fileInput = document.getElementById("file");
+    let buttons = document.querySelectorAll(".option-btn");
+    let body = document.body;
+
+    // Remove 'active' class from all buttons
+    buttons.forEach(button => button.classList.remove("active"));
+
+    // Reset background color
+    body.classList.remove("background-image", "background-audio", "background-video");
+
+    // Set file type and add 'active' class
+    if (type === 'image') {
+        fileInput.accept = "image/*";
+        document.getElementById("imageBtn").classList.add("active");
+        body.classList.add("background-image");
+    } else if (type === 'audio') {
+        fileInput.accept = "audio/*";
+        document.getElementById("audioBtn").classList.add("active");
+        body.classList.add("background-audio");
+    } else if (type === 'video') {
+        fileInput.accept = "audio/*, video/*"; // Allow both audio and video files
+        document.getElementById("videoBtn").classList.add("active");
+        body.classList.add("background-video");
+    }
+
+    fileInput.value = ""; // Clear previous selection
+}
+
+        function showFileName() {
+            let fileInput = document.getElementById("file");
+            let fileMessage = document.getElementById("fileMessage");
+            if (fileInput.files.length > 0) {
+                let fileName = fileInput.files[0].name;
+                let fileType = fileInput.files[0].type;
+
+                if (fileType.startsWith('image')) {
+                    fileMessage.textContent = "Image selected successfully: " + fileName;
+                } else if (fileType.startsWith('audio')) {
+                    fileMessage.textContent = "Audio selected successfully: " + fileName;
+                } else if (fileType.startsWith('video')) {
+                    fileMessage.textContent = "Video selected successfully: " + fileName;
+                } else {
+                    fileMessage.textContent = "Invalid file type!";
+                }
+            }
+        }
+
+        function clearForm() {
+            document.getElementById("file").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("decodedMessage").textContent = "";
+            document.getElementById("fileMessage").textContent = "";
+            document.querySelectorAll(".option-btn").forEach(button => button.classList.remove("active"));
+            document.body.classList.remove("background-image", "background-audio", "background-video");
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

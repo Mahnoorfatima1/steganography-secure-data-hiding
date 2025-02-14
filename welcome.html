@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Tool</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .feature-card {
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .feature-card:hover {
+            background-color: gold !important;
+            color: black !important;
+            transform: scale(1.05);
+        }
+    </style>
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        /* Navbar Styling */
+        .navbar {
+        background: linear-gradient(45deg, #0d6efd, #6610f2);
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        padding: 12px 0;
+    }
+    .navbar-brand {
+        font-size: 26px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: #fff !important;
+    }bar-brand, 
+    
+    .navbar-nav .nav-link {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff !important;
+        margin: 0 12px;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+    }
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+        /* Carousel Styling */
+        .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.8);
+    }
+
+    .navbar-toggler {
+        border: none;
+        outline: none;
+    }
+
+    .navbar-toggler-icon {
+        filter: brightness(0) invert(1);
+    }
+
+
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+        .info-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        /* Hover effect for features */
+        .feature-card:hover {
+            background-color: #007bff;
+            color: white;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">SteganoTool</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carousel -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="static/images/dd.jpg" class="d-block w-100" alt="Security">
+            </div>
+            <div class="carousel-item">
+                <img src="static/images/ds.png" class="d-block w-100" alt="Hacker">
+            </div>
+            <div class="carousel-item">
+                <img src="static/images/rr.png" class="d-block w-100" alt="Privacy">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Information Section -->
+    <div class="container info-section">
+        <h1>Welcome to Steganography Tool</h1>
+        <p class="lead">Steganography is the practice of concealing messages within other non-secret data.</p>
+        <a href="/index" class="btn btn-custom">Get Started</a>
+
+    </div>
+
+    <!-- Features Section -->
+    <div class="container" id="features">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card p-4 feature-card">
+                    <h3 class="text-primary">Image Steganography</h3>
+                    <p>Hide secret messages inside images without altering their appearance.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 feature-card">
+                    <h3 class="text-primary">Audio Steganography</h3>
+                    <p>Embed encrypted messages inside audio files for secure communication.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 feature-card">
+                    <h3 class="text-primary">Text Steganography</h3>
+                    <p>Conceal sensitive information within plain text documents.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <!-- About Section -->
+<div class="container info-section text-center py-5 bg-dark text-white" id="about">
+    <h1 class="mb-4 fw-bold">About the Project</h1>
+    <p class="lead">Meet our amazing team behind <span class="fw-bold">SteganoTool</span>:</p>
+    <ul class="list-group w-50 mx-auto shadow-lg rounded-3 overflow-hidden">
+        <li class="list-group-item py-3 fw-semibold team-member">Ghulam Abbas</li>
+        <li class="list-group-item py-3 fw-semibold team-member">Muhammad Tayyab Mujtaba Khan</li>
+        <li class="list-group-item py-3 fw-semibold team-member">Usman Malik</li>
+        <li class="list-group-item py-3 fw-semibold team-member">Mahnoor Fatima</li>
+        <li class="list-group-item py-3 fw-semibold team-member">Hajra Shehzad</li>
+
+    </ul>
+</div>
+
+<style>
+    .team-member {
+        background-color: white;
+        color: black;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+    
+    .team-member:hover {
+        background-color: gold;
+        color: black;
+        transform: scale(1.05);
+    }
+</style>
+
+<!-- Contact Section -->
+<div class="container info-section py-5 bg-dark text-white" id="contact">
+    <h1 class="text-center fw-bold">Contact Us</h1>
+    <form class="w-50 mx-auto p-4 bg-black rounded-3 shadow-lg">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control border-0 shadow-sm" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control border-0 shadow-sm" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea class="form-control border-0 shadow-sm" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning w-100 fw-bold">Send Message</button>
+    </form>
+
+
+   
+</div>
+
+<!-- Footer -->
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
